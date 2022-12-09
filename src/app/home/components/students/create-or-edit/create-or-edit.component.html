@@ -1,0 +1,87 @@
+
+<form [formGroup]="CreateForm" (submit)="submitForm()" errorTailor>
+    <div class="m-6" >
+
+    <div class="relative z-0 mb-6 w-full group">
+        <label for="first_name" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
+        <input [controlErrorsTpl]="first_name" formControlName="first_name" type="text" name="first_name" id="first_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="First Name" required />
+    </div>
+
+    <div class="relative z-0 mb-6 w-full group">
+        <label for="last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
+        <input [controlErrorsTpl]="last_name" formControlName="last_name" type="text" name="last_name" id="last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Last Name" required />
+    </div>
+
+    <div class="relative z-0 w-full group">
+        <label for="lv_id" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Level</label>
+        <br><section>
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-select formControlName="lv_id" [controlErrorsTpl]="lv_id" required>
+                    <mat-option *ngFor="let level of levels" [value]="level.value">
+                        {{ level.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+    </div>
+
+    <div class="relative z-0 w-full group">
+        <label for="group" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Group</label>
+        <br><section>
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-select formControlName="group" [controlErrorsTpl]="group" required>
+                    <mat-option *ngFor="let group of groups" [value]="group.value">
+                        {{ group.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+    </div>
+
+    <div class="relative z-0 mb-6 w-full group">
+        <label for="email" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
+        <input [controlErrorsTpl]="email" formControlName="email" type="text" name="email" id="email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Email" required />
+    </div>
+
+    <div class="relative z-0 mb-6 w-full group">
+        <label for="phone_number" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone Number</label>
+        <input [controlErrorsTpl]="phone_number" formControlName="phone_number" type="text" name="phone_number" id="phone_number" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Phone Number" required />
+    </div>
+    
+    <div class="relative z-0 mb-6 w-full group">
+        <label for="geolocation" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Geolocation</label>
+        <input [controlErrorsTpl]="geolocation" formControlName="geolocation" type="text" name="geolocation" id="geolocation" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Geolocation" required />
+    </div>
+
+    <div class="relative z-0 mb-6 w-full group">
+        <label for="status" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Status</label>
+        <br>
+        <mat-slide-toggle
+        formControlName="status"
+        class="example-margin"
+        [color]="data.status ? 'primary' : 'primary'"
+        [checked]="data.status ? true : false"
+        >
+        </mat-slide-toggle>
+    </div>
+
+    <div class="relative z-0 mb-6 w-full group">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+          Aceptar
+        </button>
+        <button (click)="cancelar()" type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
+          Cancelar
+        </button>
+    </div>
+
+    </div>
+</form>
+
+<ng-template #first_name #last_name #lv_id #group #email #phone_number #geolocation #status let-error let-text="text">
+    <div *ngIf="error?.minlength">
+      <i class="text-red-600">The field needs {{error.requiredLength}} characters</i>
+    </div>
+    <div *ngIf="error?.required">
+      <i class="text-red-600">This field is required</i>
+    </div>
+</ng-template>

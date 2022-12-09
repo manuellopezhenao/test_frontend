@@ -10,8 +10,9 @@ import { Observable } from 'rxjs';
   @Injectable()  
  class UrlInterceptor implements HttpInterceptor {  constructor() {}  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {  
       request = request.clone({  
-         url: `http://192.168.43.185:3000${request.url}`,
+         url: `http://192.168.15.161:3001${request.url}`,
       });    
+      console.log(request.url);
       return next.handle(request);  
     }  
   }  

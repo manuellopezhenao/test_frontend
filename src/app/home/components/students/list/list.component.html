@@ -1,75 +1,86 @@
 <mat-form-field class="m-6">
-    <mat-label class="{{isVisibleFilter}}">Buscar</mat-label>
+    <mat-label class="{{isVisibleFilter}}">Search</mat-label>
     <input class="{{isVisibleFilter}}" matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
 </mat-form-field>
 
+
+<div class="mat-elevation-z8 m-6">
 <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="s_id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'bg-gray-100' : 'bg-transparent'}}"> {{row.s_id}} </td>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"> {{row.s_id}} </td>
     </ng-container>
 
     <ng-container matColumnDef="first_name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
-        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'bg-gray-100' : 'bg-transparent'}}"> {{row.first_name}} </td>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"> {{row.first_name}} </td>
     </ng-container>
 
     <ng-container matColumnDef="last_name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
-        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'bg-gray-100' : 'bg-transparent'}}"> {{row.last_name}} </td>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"> {{row.last_name}} </td>
     </ng-container>       
     
     <ng-container matColumnDef="lv_id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> level </th>
-        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'bg-gray-100' : 'bg-transparent'}}"> {{row.lv_id}} </td>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"> {{row.lv_id}} </td>
     </ng-container>
 
     <ng-container matColumnDef="group">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Group </th>
-        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'bg-gray-100' : 'bg-transparent'}}"> {{row.group}} </td>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"> {{row.group}} </td>
     </ng-container>
     
     <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'bg-gray-100' : 'bg-transparent'}}"> {{row.email}} </td>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"> {{row.email.toLowerCase()}} </td>
     </ng-container>
 
     <ng-container matColumnDef="phone_number">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone Number </th>
-        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'bg-gray-100' : 'bg-transparent'}}"> {{row.phone_number}} </td>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"> {{row.phone_number}} </td>
     </ng-container>
 
     <ng-container matColumnDef="geolocation">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Geolocation </th>
-        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'bg-gray-100' : 'bg-transparent'}}"> {{row.geolocation}} </td>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"><button (click)="openMap(row)"><mat-icon>location_on</mat-icon></button> {{row.geolocation}} </td>
     </ng-container>
 
     <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'bg-gray-100' : 'bg-transparent'}}"><mat-slide-toggle
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"><mat-slide-toggle
           class="example-margin"
           [color]="row.status == '1' ? 'primary' : 'warn'"
           [checked]="row.status == '1' ? true : false"
           [disabled]=""
-          (change)="enableDisableDefecto(row, $event)"
+          (change)="enableDisable(row, $event)"
           >
       </mat-slide-toggle></td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}">
+          <button (click)="ShowEditcaDialog(row)" class="pt-1.5 w-9 h-9 rounded-full">
+             <mat-icon>edit</mat-icon>
+          </button>
+      </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="5">Sin coincidencias para "{{input.value}}"</td>
+        <td class="mat-cell" colspan="5">No matches for "{{input.value}}"</td>
       </tr>
 
 </table>
-
 <mat-toolbar class="justify-between">
-
+    
     <!-- <mat-icon (click)="exportTableToExcel()" class="scale-125 hover:cursor-pointer hover:bg-blue-400 rounded-full hover:scale-150">save_alt</mat-icon> -->
     <mat-paginator class="bg-[#F5F5F5]" [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
-
-
+    
+    
 </mat-toolbar>
+</div>

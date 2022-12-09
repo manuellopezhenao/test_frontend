@@ -12,11 +12,15 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreateOrEditComponent } from './create-or-edit/create-or-edit.component';
+import {MatSelectModule} from '@angular/material/select';
+
+
 
 
 
 @NgModule({
-  declarations: [ListComponent],
+  declarations: [ListComponent, CreateOrEditComponent, CreateOrEditComponent],
   imports: [
     CommonModule,
     StudentsRoutingModule,
@@ -24,17 +28,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatPaginatorModule,
     MatTableModule,
     MatSortModule,
-    MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     MatSlideToggleModule,
     MatToolbarModule,
-    MatSortModule,
-    MatIconModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSortModule,
-  ],
+    MatSelectModule
+],
   exports: [ListComponent],
 })
 export class StudentsModule {}
