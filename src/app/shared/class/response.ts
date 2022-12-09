@@ -1,5 +1,5 @@
 export interface ResponseInterface {
-    success: boolean;
-    mgs: string;
-    data?: any;
+  success: boolean;
+  mgs: string;
+  data?: any;
 }

@@ -9,6 +9,13 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatSelectModule} from '@angular/material/select';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import { MainNavComponent } from './components/main-nav/main-nav.component';
+import { RouterModule } from '@angular/router';
+
+
+
 
 
 
@@ -17,7 +24,8 @@ import {MatSelectModule} from '@angular/material/select';
   declarations: [
     AlertComponent,
     ConfirmActionComponent,
-    LoadingDialogComponent
+    LoadingDialogComponent,
+    MainNavComponent
   ],
   imports: [
     CommonModule,
@@ -26,13 +34,17 @@ import {MatSelectModule} from '@angular/material/select';
     MatProgressSpinnerModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSidenavModule,
+    MatListModule,
+    RouterModule
   ],
   exports: [
     errorTailorImports,
     AlertComponent,
     ConfirmActionComponent,
-    LoadingDialogComponent
+    LoadingDialogComponent,
+    MainNavComponent
   ]
 })
 export class SharedModule { }

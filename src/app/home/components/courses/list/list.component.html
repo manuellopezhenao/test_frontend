@@ -1,0 +1,52 @@
+<mat-form-field class="m-6">
+    <mat-label class="{{isVisibleFilter}}">Search</mat-label>
+    <input class="{{isVisibleFilter}}" matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+</mat-form-field>
+
+
+<div class="mat-elevation-z8 m-6">
+<table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="c_id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"> {{row.c_id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"> {{row.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="credits">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Credits </th>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"> {{row.credits}} </td>
+    </ng-container>    
+    
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}">
+          <button (click)="ShowEditcaDialog(row)" class="pt-1.5 w-9 h-9 rounded-full">
+             <mat-icon>edit</mat-icon>
+          </button>
+      </td>
+    </ng-container>
+    
+   
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="5">No matches for "{{input.value}}"</td>
+      </tr>
+
+</table>
+<mat-toolbar class="justify-between">
+    
+    <!-- <mat-icon (click)="exportTableToExcel()" class="scale-125 hover:cursor-pointer hover:bg-blue-400 rounded-full hover:scale-150">save_alt</mat-icon> -->
+    <mat-paginator class="bg-[#F5F5F5]" [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
+    
+    
+</mat-toolbar>
+</div>
+
+<button type="button" (click)="ShowEditcaDialog()" class="fixed z-90 bottom-10 right-8 bg-blue-600 w-20 h-20 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:bg-blue-700 animate-bounce duration-300"><mat-icon class="scale-150">add</mat-icon></button>

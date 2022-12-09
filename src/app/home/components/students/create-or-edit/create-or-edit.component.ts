@@ -25,26 +25,26 @@ export class CreateOrEditComponent implements OnInit {
 
   initForm() {
     this.CreateForm = new FormGroup({
-      first_name: new FormControl(this.data.first_name ?? "", [Validators.required]),
-      last_name: new FormControl(this.data.last_name ?? "", [Validators.required]),
-      lv_id: new FormControl(this.data.lv_id ?? "", [Validators.required]),
-      group: new FormControl(this.data.group ?? "", [Validators.required]),
-      email: new FormControl(this.data.email ?? "", [Validators.required]),
-      phone_number: new FormControl(this.data.phone_number ?? "", [Validators.required]),
-      geolocation: new FormControl(this.data.geolocation ?? "", [Validators.required]),
-      status: new FormControl(this.data.status ?? 0, [Validators.required]),
+      first_name: new FormControl(this.data?.first_name ?? "", [Validators.required]),
+      last_name: new FormControl(this.data?.last_name ?? "", [Validators.required]),
+      lv_id: new FormControl(this.data?.lv_id ?? "", [Validators.required]),
+      group: new FormControl(this.data?.group ?? "", [Validators.required]),
+      email: new FormControl(this.data?.email ?? "", [Validators.required, Validators.email]),
+      phone_number: new FormControl(this.data?.phone_number ?? "", [Validators.required]),
+      geolocation: new FormControl(this.data?.geolocation ?? "", [Validators.required]),
+      status: new FormControl(this.data?.status ?? 0, [Validators.required]),
     });
   }
 
-  cancelar(): void {
-    this.dialog.close({ success: true, message: "Cancelado" });
+  cancel(): void {
+    this.dialog.close({ success: true, message: "Canceled" });
   }
 
   submitForm() {
     if (this.CreateForm.valid) {
 
       let student: StudentsInterface = {
-        s_id: this.data.s_id,
+        s_id: this.data?.s_id,
         first_name: this.CreateForm.value.first_name.trim(),
         last_name: this.CreateForm.value.last_name.trim(),
         lv_id: this.CreateForm.value.lv_id,
@@ -57,12 +57,12 @@ export class CreateOrEditComponent implements OnInit {
 
       console.log(student);
 
-      if (this.data.s_id) {
+      if (this.data?.s_id) {
         // Update
         this.studentService.updateStudent(student).then((res) => {
           console.log(res);
           if (res.success) {
-            this.dialog.close({ success: true, message: "Usuario actualizado correctamente" });
+            this.dialog.close({ success: true, message: "Student Upadade Success" });
           }else{
             this.dialog.close({ success: false, error: res.error });
           }
@@ -72,10 +72,21 @@ export class CreateOrEditComponent implements OnInit {
         });
       }else{
         // Create
+        this.studentService.createStudent(student).then((res) => {
+          if (res.success) {
+            this.dialog.close({ success: true, message: "Student Create Success" });
+          }else{
+            this.dialog.close({ success: false, error: res.error });
+          }
+        }
+        ).catch((err) => {
+          console.log(err);
+          this.dialog.close({ success: false, error: err.error });
+        });
       }
 
 
-      this.dialog.close({ success: true, message: "Guardado", data: this.CreateForm.value });
+      this.dialog.close({ success: true, message: "Saved", data: this.CreateForm.value });
     } else {
       this.CreateForm.markAllAsTouched();
     }

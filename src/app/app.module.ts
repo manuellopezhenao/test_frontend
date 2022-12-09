@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { UrlInterceptor } from './shared/http.injection';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideErrorTailorConfig } from '@ngneat/error-tailor';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +16,7 @@ import { provideErrorTailorConfig } from '@ngneat/error-tailor';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    SharedModule
   ],
   providers: [
     {

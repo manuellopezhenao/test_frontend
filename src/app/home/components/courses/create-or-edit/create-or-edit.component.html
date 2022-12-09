@@ -1,0 +1,35 @@
+
+<form [formGroup]="CreateForm" (submit)="submitForm()" errorTailor>
+    <div class="m-6" >
+
+    <div class="relative z-0 mb-6 w-full group">
+        <label for="name" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Name</label>
+        <input [controlErrorsTpl]="name" formControlName="name" type="text" name="name" id="name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Name" required />
+    </div>
+
+    <div class="relative z-0 mb-6 w-full group">
+        <label for="credits" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Credits</label>
+        <input [controlErrorsTpl]="credits" formControlName="credits" type="text" name="credits" id="credits" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Credits" required />
+    </div>
+
+
+    <div class="relative z-0 mb-6 w-full group">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+          Add
+        </button>
+        <button (click)="cancel()" type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
+          Cancel
+        </button>
+    </div>
+
+    </div>
+</form>
+
+<ng-template #name #credits let-error let-text="text">
+    <div *ngIf="error?.minlength">
+      <i class="text-red-600">The field needs {{error.requiredLength}} characters</i>
+    </div>
+    <div *ngIf="error?.required">
+      <i class="text-red-600">This field is required</i>
+    </div>
+</ng-template>
