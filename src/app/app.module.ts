@@ -8,10 +8,8 @@ import { UrlInterceptor } from './shared/http.injection';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideErrorTailorConfig } from '@ngneat/error-tailor';
 import { SharedModule } from './shared/shared.module';
-import {
-  MatSnackBarModule,
-  MAT_SNACK_BAR_DEFAULT_OPTIONS,
-} from '@angular/material/snack-bar';
+import { ToastrModule } from 'ngx-toastr';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,13 +18,11 @@ import {
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
-    {
-      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-      useValue: { panelClass: ['color-snack'] },
-    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: UrlInterceptor,

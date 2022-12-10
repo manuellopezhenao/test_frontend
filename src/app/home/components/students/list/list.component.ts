@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 import { StudentService } from 'src/app/home/services/students.service';
 import { StudentsInterface } from 'src/app/shared/class/students';
-import { opeDialogAlert, openSnackBar } from 'src/app/shared/SnackBar';
+import { opeDialogAlert } from 'src/app/shared/SnackBar';
 import { CreateOrEditComponent } from '../create-or-edit/create-or-edit.component';
 
 @Component({
@@ -26,7 +25,7 @@ export class ListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private studentService: StudentService, public dialog: MatDialog, private _snackBar: MatSnackBar) { }
+  constructor(private studentService: StudentService, public dialog: MatDialog, private toastr: ToastrService) { }
 
   async ngOnInit() {
     this.createTable();
@@ -61,10 +60,10 @@ export class ListComponent implements OnInit {
   delteStudent(id: number) {
     this.studentService.deleteStudent(id).then((result: any) => {
       if (result.success) {
-        openSnackBar("Success", result.success, "check_circle", "bg-teal-100", 1000, this._snackBar);
+        this.toastr.success("Success", result.mgs);
         this.createTable();
       }else{
-        openSnackBar("Error", result.error, "error", "bg-red-100", 2000, this._snackBar);
+        this.toastr.error("Error", result.error);
       }
     });
   }
@@ -91,10 +90,10 @@ export class ListComponent implements OnInit {
     
     this.studentService.enableOrDisableStudent(student, status).then((result) => {
       if (result.success) {
-        openSnackBar("Success", result.message, "check_circle", "bg-teal-100", 2000, this._snackBar);
+        this.toastr.success("Success", result.mgs);
         this.createTable();
       }else{
-        openSnackBar("Error", result.error, "error", "bg-yellow-400", 2000, this._snackBar);
+        this.toastr.error("Error", result.error);
       }
     });
 
@@ -111,10 +110,10 @@ export class ListComponent implements OnInit {
         if (result.message == "Canceled") {
           return;
         }
-        openSnackBar("Success", result.message, "check_circle", "bg-teal-100", 2000, this._snackBar);
+        this.toastr.success("Success", result.message);
         this.createTable();
       }else{
-        openSnackBar("Error", result.error, "error", "bg-yellow-400", 2000, this._snackBar);
+        this.toastr.error("Error", result.error);
       }
     });
   }

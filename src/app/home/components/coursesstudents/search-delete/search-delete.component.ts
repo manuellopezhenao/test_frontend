@@ -87,7 +87,7 @@ export class SearchDeleteComponent implements OnInit {
         if (res) {
           this.dialog.close({
             success: true,
-            message: 'Course Student Link Success',
+            message: 'Course Student Unlink Success',
           });
         } else {
           this.dialog.close({

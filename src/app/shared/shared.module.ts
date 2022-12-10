@@ -4,7 +4,6 @@ import { errorTailorImports } from '@ngneat/error-tailor';
 import { AlertComponent } from './components/alert/alert.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ConfirmActionComponent } from './components/confirm-action/confirm-action.component';
-import { LoadingDialogComponent } from './components/loading-dialog/loading-dialog.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -24,7 +23,6 @@ import { RouterModule } from '@angular/router';
   declarations: [
     AlertComponent,
     ConfirmActionComponent,
-    LoadingDialogComponent,
     MainNavComponent
   ],
   imports: [
@@ -43,7 +41,6 @@ import { RouterModule } from '@angular/router';
     errorTailorImports,
     AlertComponent,
     ConfirmActionComponent,
-    LoadingDialogComponent,
     MainNavComponent
   ]
 })

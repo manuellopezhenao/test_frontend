@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 import { CoursesStudentsService } from 'src/app/home/services/coursesStudents.service';
 import { CoursesInterface } from 'src/app/shared/class/courses';
 import { CoursesStudentsInterface } from 'src/app/shared/class/courses_x_students';
-import { opeDialogAlert, openSnackBar } from 'src/app/shared/SnackBar';
+import { opeDialogAlert } from 'src/app/shared/SnackBar';
 import { CreateComponent } from '../create/create.component';
 import { SearchDeleteComponent } from '../search-delete/search-delete.component';
 
@@ -27,7 +27,7 @@ export class ListComponent implements OnInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private coursesStudentSerice: CoursesStudentsService, public dialog: MatDialog, private _snackBar: MatSnackBar) { }
+  constructor(private coursesStudentSerice: CoursesStudentsService, public dialog: MatDialog, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.createTable();
@@ -70,10 +70,10 @@ export class ListComponent implements OnInit{
   delteCourseStudent(id: number) {
     this.coursesStudentSerice.unlinkCourseStudent(id).then((result: any) => {
       if (result.success) {
-        openSnackBar("Success", result.mgs, "check_circle", "bg-teal-100", 1000, this._snackBar);
+        this.toastr.success("Success", result.mgs);
         this.createTable();
       }else{
-        openSnackBar("Error", result.error, "error", "bg-red-100", 2000, this._snackBar);
+        this.toastr.error("Error", result.error);
       }
     });
   }
@@ -89,10 +89,14 @@ export class ListComponent implements OnInit{
         if (result.message == "Canceled") {
           return;
         }
-        openSnackBar("Success", result.message, "check_circle", "bg-teal-100", 2000, this._snackBar);
+        this.toastr.success("Success", result.message);
         this.createTable();
       }else{
-        openSnackBar("Error", result.error, "error", "bg-yellow-400", 2000, this._snackBar);
+        if(result.error == "Course for student already exist"){
+          this.toastr.warning("Warning", result.error);
+          return;
+        }
+        this.toastr.error("Error", result.error);
       }
     });
   }
@@ -107,10 +111,10 @@ export class ListComponent implements OnInit{
         if (result.message == "Canceled") {
           return;
         }
-        openSnackBar("Success", result.message, "check_circle", "bg-teal-100", 2000, this._snackBar);
+        this.toastr.success("Success", result.message);
         this.createTable();
       }else{
-        openSnackBar("Error", result.error, "error", "bg-yellow-400", 2000, this._snackBar);
+        this.toastr.error("Error", result.error);
       }
     });
   }

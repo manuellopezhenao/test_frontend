@@ -4,9 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 import { CoursesService } from 'src/app/home/services/courses.service';
 import { CoursesInterface } from 'src/app/shared/class/courses';
-import { opeDialogAlert, openSnackBar } from 'src/app/shared/SnackBar';
+import { opeDialogAlert } from 'src/app/shared/SnackBar';
 import { CreateOrEditComponent } from '../create-or-edit/create-or-edit.component';
 
 @Component({
@@ -25,7 +26,7 @@ export class ListComponent implements OnInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private coursesSerice: CoursesService, public dialog: MatDialog, private _snackBar: MatSnackBar) { }
+  constructor(private coursesSerice: CoursesService, public dialog: MatDialog, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.createTable();
@@ -59,7 +60,6 @@ export class ListComponent implements OnInit{
     const dialog = opeDialogAlert(course.c_id!, this.dialog, `Are you sure to delete the course: ${course.name}?`, "Atention", 'delete');
 
     dialog.afterClosed().subscribe((result: any) => {
-      console.log("result: " + result.success);
       if (result.success) {
         this.delteCourse(course.c_id!);
       }
@@ -70,10 +70,10 @@ export class ListComponent implements OnInit{
   delteCourse(id: number) {
     this.coursesSerice.deleteCourse(id).then((result: any) => {
       if (result.success) {
-        openSnackBar("Success", result.success, "check_circle", "bg-teal-100", 1000, this._snackBar);
+        this.toastr.success("Success", result.mgs);
         this.createTable();
       }else{
-        openSnackBar("Error", result.error, "error", "bg-red-100", 2000, this._snackBar);
+        this.toastr.error("Error", result.error);
       }
     });
   }
@@ -89,10 +89,10 @@ export class ListComponent implements OnInit{
         if (result.message == "Canceled") {
           return;
         }
-        openSnackBar("Success", result.message, "check_circle", "bg-teal-100", 2000, this._snackBar);
+        this.toastr.success("Success", result.message);
         this.createTable();
       }else{
-        openSnackBar("Error", result.error, "error", "bg-yellow-400", 2000, this._snackBar);
+        this.toastr.error("Error", result.error);
       }
     });
   }
