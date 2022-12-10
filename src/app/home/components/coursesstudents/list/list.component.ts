@@ -4,10 +4,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { CoursesService } from 'src/app/home/services/courses.service';
+import { CoursesStudentsService } from 'src/app/home/services/coursesStudents.service';
 import { CoursesInterface } from 'src/app/shared/class/courses';
+import { CoursesStudentsInterface } from 'src/app/shared/class/courses_x_students';
 import { opeDialogAlert, openSnackBar } from 'src/app/shared/SnackBar';
-import { CreateOrEditComponent } from '../create-or-edit/create-or-edit.component';
+import { CreateComponent } from '../create/create.component';
+import { SearchDeleteComponent } from '../search-delete/search-delete.component';
 
 @Component({
   selector: 'app-list',
@@ -19,24 +21,24 @@ export class ListComponent implements OnInit{
   courses: CoursesInterface[] = [];
   isVisibleFilter: string = "invisible";
   first_name: string;
-  displayedColumns: string[] = ["c_id", "name", "credits", "actions", "delete"];
+  displayedColumns: string[] = ["cxs_id", "c_id","c_name", "s_id", "s_name", "delete"];
   dataSource!: MatTableDataSource<CoursesInterface>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private coursesSerice: CoursesService, public dialog: MatDialog, private _snackBar: MatSnackBar) { }
+  constructor(private coursesStudentSerice: CoursesStudentsService, public dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.createTable();
   }  
 
-  async getCourses() {
-    return await this.coursesSerice.getCourses();
+  async getCoursesStudent() {
+    return await this.coursesStudentSerice.getCoursesStudents();
   }
 
   createTable() {
-    this.getCourses().then((courses) => {
+    this.getCoursesStudent().then((courses) => {
       this.courses = courses;
       this.dataSource = new MatTableDataSource(this.courses);
       this.dataSource.paginator = this.paginator;
@@ -53,24 +55,22 @@ export class ListComponent implements OnInit{
     }
   }
 
+  deleteCourse(course: CoursesStudentsInterface) {
 
-  deleteCourse(course: CoursesInterface) {
-
-    const dialog = opeDialogAlert(course.c_id!, this.dialog, `Are you sure to delete the course: ${course.name}?`, "Atention", 'delete');
+    const dialog = opeDialogAlert(course.c_id!, this.dialog, `Are you sure to delete the course: ${course.c_name} of student: ${course.s_name}?`, "Atention", 'delete');
 
     dialog.afterClosed().subscribe((result: any) => {
-      console.log("result: " + result.success);
       if (result.success) {
-        this.delteCourse(course.c_id!);
+        this.delteCourseStudent(course.cxs_id!);
       }
     });
     
   }
 
-  delteCourse(id: number) {
-    this.coursesSerice.deleteCourse(id).then((result: any) => {
+  delteCourseStudent(id: number) {
+    this.coursesStudentSerice.unlinkCourseStudent(id).then((result: any) => {
       if (result.success) {
-        openSnackBar("Success", result.success, "check_circle", "bg-teal-100", 1000, this._snackBar);
+        openSnackBar("Success", result.mgs, "check_circle", "bg-teal-100", 1000, this._snackBar);
         this.createTable();
       }else{
         openSnackBar("Error", result.error, "error", "bg-red-100", 2000, this._snackBar);
@@ -78,11 +78,29 @@ export class ListComponent implements OnInit{
     });
   }
 
-  async ShowEditcaDialog(studen?: CoursesInterface) {
-    const dialogRef = this.dialog.open(CreateOrEditComponent, {
+  async ShowCreateDialog(studen?: CoursesInterface) {
+    const dialogRef = this.dialog.open(CreateComponent, {
       width: '500px',
       disableClose: true,
       data: studen
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.success) {
+        if (result.message == "Canceled") {
+          return;
+        }
+        openSnackBar("Success", result.message, "check_circle", "bg-teal-100", 2000, this._snackBar);
+        this.createTable();
+      }else{
+        openSnackBar("Error", result.error, "error", "bg-yellow-400", 2000, this._snackBar);
+      }
+    });
+  }
+
+  async ShowSearchDeleteDialog() {
+    const dialogRef = this.dialog.open(SearchDeleteComponent, {
+      width: '500px',
+      disableClose: true,
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result.success) {

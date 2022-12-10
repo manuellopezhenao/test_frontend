@@ -7,7 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { StudentService } from 'src/app/home/services/students.service';
 import { StudentsInterface } from 'src/app/shared/class/students';
-import { openSnackBar } from 'src/app/shared/SnackBar';
+import { opeDialogAlert, openSnackBar } from 'src/app/shared/SnackBar';
 import { CreateOrEditComponent } from '../create-or-edit/create-or-edit.component';
 
 @Component({
@@ -20,7 +20,7 @@ export class ListComponent implements OnInit {
   students: StudentsInterface[] = [];
   isVisibleFilter: string = "invisible";
   first_name: string;
-  displayedColumns: string[] = ["s_id", "first_name", "last_name", "lv_id", "group", "email", "phone_number", "geolocation", "status", "actions"];
+  displayedColumns: string[] = ["s_id", "first_name", "last_name", "lv_id", "group", "email", "phone_number", "geolocation", "status", "actions", "delete"];
   dataSource!: MatTableDataSource<StudentsInterface>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -46,6 +46,28 @@ export class ListComponent implements OnInit {
     });
   }
   
+  deleteStudent(student: StudentsInterface) {
+
+    const dialog = opeDialogAlert(student.s_id!, this.dialog, `Are you sure to delete the Student: ${student.first_name}?`, "Atention", 'delete');
+
+    dialog.afterClosed().subscribe((result: any) => {
+      if (result?.success) {
+        this.delteStudent(student.s_id!);
+      }
+    });
+    
+  }
+
+  delteStudent(id: number) {
+    this.studentService.deleteStudent(id).then((result: any) => {
+      if (result.success) {
+        openSnackBar("Success", result.success, "check_circle", "bg-teal-100", 1000, this._snackBar);
+        this.createTable();
+      }else{
+        openSnackBar("Error", result.error, "error", "bg-red-100", 2000, this._snackBar);
+      }
+    });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

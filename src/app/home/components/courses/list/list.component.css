@@ -1,0 +1,12 @@
+#delete:hover {
+    cursor: pointer;
+    color: red; 
+  }
+
+  
+
+  ::ng-deep snack-bar-container.alert-red{
+    padding: 20px;
+    background-color: red;
+    color: white;
+  }

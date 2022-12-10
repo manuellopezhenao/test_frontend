@@ -1,0 +1,66 @@
+<mat-toolbar class="justify-between m-8 bg-transparent">
+
+
+<mat-form-field class="m-2">
+    <mat-label class="{{isVisibleFilter}}">Search</mat-label>
+    <input class="{{isVisibleFilter}}" matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+</mat-form-field>
+
+<button (click)="ShowSearchDeleteDialog()" class="bg-red-500 m-20 hover:bg-red-600 text-grey-darkest py-2 px-4 rounded inline-flex items-center">
+    <mat-icon class="w-4 h-4 mr-2">delete</mat-icon>
+    <span>Search Delete</span>
+</button>
+
+</mat-toolbar>
+
+<div class="mat-elevation-z8 m-6">
+<table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="cxs_id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"> {{row.cxs_id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="c_id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID Course </th>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"> {{row.c_id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="c_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name Course </th>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"> {{row.c_name}} </td>
+    </ng-container>    
+
+    <ng-container matColumnDef="s_id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID Student </th>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"> {{row.s_id}} </td>
+    </ng-container> 
+
+    <ng-container matColumnDef="s_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name Student </th>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}"> {{row.s_name}} </td>
+    </ng-container> 
+
+    <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Delete </th>
+        <td mat-cell *matCellDef="let row; let i = index" class="{{i%2==0 ? 'gray' : 'tran'}}">  <mat-icon id="delete" (click)="deleteCourse(row)">delete</mat-icon> </td>
+    </ng-container>
+    
+   
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="5">No matches for "{{input.value}}"</td>
+      </tr>
+
+</table>
+<mat-toolbar class="justify-between">
+    
+    <mat-paginator class="bg-[#F5F5F5]" [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
+    
+    
+</mat-toolbar>
+</div>
+
+<button type="button" (click)="ShowCreateDialog()" class="fixed z-90 bottom-10 right-8 bg-blue-600 w-20 h-20 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:bg-blue-700 animate-bounce duration-300"><mat-icon class="scale-150">add</mat-icon></button>

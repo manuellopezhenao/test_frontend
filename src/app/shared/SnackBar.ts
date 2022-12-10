@@ -14,8 +14,9 @@ const openSnackBar = (estado: string, mensaje: string, icon: string, color: stri
         estado: estado,
         message: mensaje,
         icon: icon,
+        color: color
       },
-      panelClass: [color]
+      panelClass: ['custom-class']
     });
   }
 

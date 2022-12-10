@@ -1,11 +1,11 @@
 export interface StudentsInterface {
-  s_id?: Number;
+  s_id?: number;
   first_name: string;
   last_name: string;
-  lv_id: Number;
+  lv_id: number;
   group: string;
   email: string;
   phone_number: string;
   geolocation: string;
-  status: Number;
+  status: number;
 }

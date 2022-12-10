@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 
 
@@ -18,11 +19,12 @@ export class MainNavComponent implements OnInit {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
   }
 
   ngOnInit(): void {
-
+    const url = window.location.pathname == "/" ?  "/students" : window.location.pathname;
+    this.router.navigate([url]);
   }
 
 

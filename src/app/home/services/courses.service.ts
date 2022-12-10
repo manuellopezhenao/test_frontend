@@ -37,5 +37,11 @@ export class CoursesService {
         return data;
     }
 
+    async deleteCourse(c_id: number) {
+        const resp = this.client.delete('/courses/' + c_id, this.httpOptions);
+        const data: any = await lastValueFrom(resp);
+        return data;
+    }
+
     
 }

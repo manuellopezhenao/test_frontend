@@ -36,4 +36,10 @@ export class StudentService {
         const data: any = await lastValueFrom(resp);
         return data;
     }
+
+    async deleteStudent(s_id: number) {
+        const resp = this.client.delete('/students/' + s_id, this.httpOptions);
+        const data: any = await lastValueFrom(resp);
+        return data;
+    }
 }
