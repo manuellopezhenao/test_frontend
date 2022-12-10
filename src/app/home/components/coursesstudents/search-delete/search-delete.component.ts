@@ -59,6 +59,7 @@ export class SearchDeleteComponent implements OnInit {
   }
 
   submitForm() {
+    if(this.CreateForm.valid){
     const dialog = opeDialogAlert(
       0,
       this.matdialog,
@@ -74,6 +75,8 @@ export class SearchDeleteComponent implements OnInit {
         this.unlinkCourse();
       }
     });
+
+  }
   }
 
   unlinkCourse() {
